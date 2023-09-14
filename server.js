@@ -3,13 +3,16 @@ console.log("Server is starting");
 const express = require("express");
 const app = express();
 // const port = 3000; Para configurar uma porta como uma variável
-const server = app.listen(3000, listening());
+const server = app.listen(3000, () => console.log("Listening. . ."));
 
-function listening() {
-    console.log("Listening. . .");
-}
-
+// Busca
 app.use(express.static("website"));
+
+
+
+
+
+
 
 /*
 // Responde no html com "Hello World" a solicitações para a URL raiz (/)
