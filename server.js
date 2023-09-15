@@ -2,28 +2,15 @@ console.log("Server is starting");
 
 const express = require("express");
 const app = express();
-// Para configurar uma porta como uma variável
-const port = 3000;
 
-app.get("/", (req, res) => {
-    return res.status(401).json({
-        message: "Erro ao encontrar a página!"
-    })
-})
+var server = app.listen(3000, listening());
 
+function listening() {
+    console.log("Listening. . .");
+}
 
-
-
-
-
-
-
-
-app.listen(port, () => console.log(`Listening at port ${port}`));
-/*
 // Busca
 app.use(express.static("website"));
-*/
 
 
 
@@ -37,4 +24,16 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
+*/
+
+/*  Ajuda de Emmanuel
+// Para configurar uma porta como uma variável
+const port = 3000;
+
+app.get("/", (req, res) => {
+    return res.status(401).json({
+        message: "Erro ao encontrar a página!"
+    })
+})
+app.listen(port, () => console.log(`Listening at port ${port}`));
 */
