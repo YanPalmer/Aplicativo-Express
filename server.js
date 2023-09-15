@@ -2,15 +2,28 @@ console.log("Server is starting");
 
 const express = require("express");
 const app = express();
-// const port = 3000; Para configurar uma porta como uma variável
-const server = app.listen(3000, () => console.log("Listening. . ."));
+// Para configurar uma porta como uma variável
+const port = 3000;
 
+app.get("/", (req, res) => {
+    return res.status(401).json({
+        message: "Erro ao encontrar a página!"
+    })
+})
+
+
+
+
+
+
+
+
+
+app.listen(port, () => console.log(`Listening at port ${port}`));
+/*
 // Busca
 app.use(express.static("website"));
-
-
-
-
+*/
 
 
 
