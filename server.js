@@ -1,17 +1,94 @@
+// API com 3 features:
+// 1 - Buscar
+// 2 - Inserir
+// 3 - Mostrar todos
+
+// Lista de palavras padrão
+var words = {
+    "rainbow": 5,
+    "unicorn": 3,
+    "doom": -3
+}
+
 console.log("Server is starting");
 
 const express = require("express");
 const app = express();
-
 var server = app.listen(3000, listening());
 
+// Verifica se a porta está sendo ouvida
 function listening() {
     console.log("Listening. . .");
 }
 
-// Busca
+// Busca a página HTML especificada
 app.use(express.static("website"));
 
+// Pega a aba de "adicionar" + palavra + pontuação ?(não lança erro ou exige um valor)
+app.get("/add/:word/:score?", addWord);
+
+function addWord(request, response) {
+    // Pega os parâmetros inseridos
+    // Ex: {
+    //      "Meu Nome": valorQualquer,
+    //      "Outro Nome: valorQualquer"
+    //  }
+    var data = request.params;
+    // Pega o JSON e seleciona a palavra escolhida, Ex:"Yan Palmer"
+    var word = data.word;
+    var score = Number(data.score);
+    if (!score) {
+        var reply = {
+            msg: "Score is required."
+        }
+        response.send(reply);
+    } else {
+        words[word] = score;
+        var reply = {
+            msg: "Thank you for your word."
+        }
+        response.send(reply);
+    }
+    // response.send(word + score);
+    // reply = "";
+    // for (let i = 0; i < num; i++) {
+    //     reply += "I love " + data.flower + " too";
+    // }
+    // response.send(reply);
+    // var number = request.params
+    // response.send("I love " + data.flower + " too");
+}
+
+
+// Pega a aba de "pegarTodos" e mostra na tela todo o objeto JSON
+app.get("/all", sendAll);
+
+function sendAll(request, response) {
+    response.send(words);
+}
+
+
+// Pega a aba de "procurar" e busca pelo item especificado
+app.get("/search/:word/", searchWord)
+
+function searchWord(request, response) {
+    var word = request.params.word;
+    var reply;
+    // Verifica se dentro de "palavras" existe "Minha Palavra"
+    if (words[word]) {
+        reply = {
+            status: "found",
+            word: word
+        }
+        words[word] = word;
+    } else {
+        reply = {
+            status: "not found",
+            word: word
+        }
+    }
+    response.send(reply);
+}
 
 
 /*
