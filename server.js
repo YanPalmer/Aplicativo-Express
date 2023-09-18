@@ -34,21 +34,20 @@ function addWord(request, response) {
     //      "Outro Nome: valorQualquer"
     //  }
     var data = request.params;
-    // Pega o JSON e seleciona a palavra escolhida, Ex:"Yan Palmer"
+    // Pega o JSON e seleciona a palavra escolhida, Ex: data: "Yan Palmer"
     var word = data.word;
     var score = Number(data.score);
     if (!score) {
         var reply = {
             msg: "Score is required."
         }
-        response.send(reply);
     } else {
         words[word] = score;
         var reply = {
             msg: "Thank you for your word."
         }
-        response.send(reply);
     }
+    response.send(reply);
     // response.send(word + score);
     // reply = "";
     // for (let i = 0; i < num; i++) {
