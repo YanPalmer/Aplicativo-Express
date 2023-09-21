@@ -9,6 +9,10 @@ var words = {
     "unicorn": 3,
     "doom": -3
 }
+// Converte objeto JS para JSON
+var novoJson = JSON.stringify(words);
+// Converte objeto JSON para JS
+var novoObjeto = JSON.parse(novoJson);
 
 console.log("Server is starting");
 
@@ -64,6 +68,7 @@ app.get("/all", sendAll);
 
 function sendAll(request, response) {
     response.send(words);
+    // console.log(novoJson, novoObjeto);
 }
 
 
