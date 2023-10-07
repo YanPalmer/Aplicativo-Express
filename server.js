@@ -3,12 +3,16 @@
 // 2 - Inserir
 // 3 - Mostrar todos
 
-// Lista de palavras padrão
-var words = {
-    "rainbow": 5,
-    "unicorn": 3,
-    "doom": -3
-}
+// Lista de palavras importadas de um arquivo JSON
+// FILE SYSTEM
+var fs = require('fs');
+// Espera os dados serem recebidos de 'words.json'
+var data = fs.readFileSync('words.json');
+// Converte os dados JSON para JS
+var words = JSON.parse(data);
+console.log(words);
+
+
 // Converte objeto JS para JSON
 var novoJson = JSON.stringify(words);
 // Converte objeto JSON para JS
@@ -45,13 +49,27 @@ function addWord(request, response) {
         var reply = {
             msg: "Score is required."
         }
+        response.send(reply);
     } else {
         words[word] = score;
-        var reply = {
-            msg: "Thank you for your word."
+
+        // Transforma os dados JS em JSON para serem SALVOS
+        var data = JSON.stringify(words, null, 2);
+        fs.writeFile('words.json', data, finished);
+        function finished(err) {
+            console.log("All set.");
+            var reply = {
+                word: word,
+                score: score,
+                status: "Success",
+                msg: "Thank you for your word."
+            }
+            response.send(reply);
         }
+
+
+
     }
-    response.send(reply);
     // response.send(word + score);
     // reply = "";
     // for (let i = 0; i < num; i++) {
