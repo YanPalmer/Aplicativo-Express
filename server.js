@@ -13,6 +13,11 @@ var words = JSON.parse(data);
 console.log(words);
 
 
+function enviarDados() {
+    let word = document.getElementById("word");
+    console.log(word);
+}
+
 // Converte objeto JS para JSON
 var novoJson = JSON.stringify(words);
 // Converte objeto JSON para JS
