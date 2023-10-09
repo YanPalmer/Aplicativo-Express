@@ -12,11 +12,10 @@ var data = fs.readFileSync('words.json');
 var words = JSON.parse(data);
 console.log(words);
 
+// ??????????
+const bodyParser = require("body-parser");
 
-function enviarDados() {
-    let word = document.getElementById("word");
-    console.log(word);
-}
+
 
 // Converte objeto JS para JSON
 var novoJson = JSON.stringify(words);
@@ -116,6 +115,42 @@ function searchWord(request, response) {
     }
     response.send(reply);
 }
+
+
+// app.use(bodyParser.json());
+app.post("/add", (req, res) => {
+    const data = req.body; // Dados enviados pelo cliente
+
+    // Lógica para inserir os dados no banco de dados
+    // Aqui você pode usar uma biblioteca de banco de dados como o Mongoose (para MongoDB) ou o Sequelize (para bancos de dados SQL) para inserir os dados no banco.
+
+    // Exemplo de como salvar os dados em um arquivo JSON (não recomendado para produção)
+    const words = JSON.parse(fs.readFileSync("words.json"));
+    words[data.word] = data.score;
+    fs.writeFileSync("words.json", JSON.stringify(words, null, 2));
+
+    // Responder ao cliente com uma confirmação
+    res.json({ message: "Dados inseridos com sucesso!" });
+});
+
+// ... (outras rotas do servidor)
+
+// BodyParser Estudar
+app.use(bodyParser.json());
+app.post("/add", (req, res) => {
+    const data = req.body; // Dados enviados pelo cliente
+
+    // Lógica para inserir os dados no banco de dados
+    // Aqui você pode usar uma biblioteca de banco de dados como o Mongoose (para MongoDB) ou o Sequelize (para bancos de dados SQL) para inserir os dados no banco.
+
+    // Exemplo de como salvar os dados em um arquivo JSON (não recomendado para produção)
+    const words = JSON.parse(fs.readFileSync("words.json"));
+    words[data.word] = data.score;
+    fs.writeFileSync("words.json", JSON.stringify(words, null, 2));
+
+    // Responder ao cliente com uma confirmação
+    res.json({ message: "Dados inseridos com sucesso!" });
+});
 
 
 /*
