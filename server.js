@@ -3,7 +3,6 @@
 // 2 - Inserir
 // 3 - Mostrar todos
 
-<<<<<<< HEAD
 // Lista de palavras importadas de um arquivo JSON
 // FILE SYSTEM
 var fs = require('fs');
@@ -18,14 +17,6 @@ const bodyParser = require("body-parser");
 
 
 
-=======
-// Lista de palavras padrão
-var words = {
-    "rainbow": 5,
-    "unicorn": 3,
-    "doom": -3
-}
->>>>>>> parent of 6432698 (Falta receber requisições da página html)
 // Converte objeto JS para JSON
 var novoJson = JSON.stringify(words);
 // Converte objeto JSON para JS
