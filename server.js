@@ -1,40 +1,11 @@
-// API com 3 features:
-// 1 - Buscar
-// 2 - Inserir
-// 3 - Mostrar todos
-
-// Lista de palavras importadas de um arquivo JSON
-// FILE SYSTEM
-var fs = require('fs');
-// Espera os dados serem recebidos de 'words.json'
-var data = fs.readFileSync('words.json');
-// Converte os dados JSON para JS
-var words = JSON.parse(data);
-console.log(words);
-
-// ??????????
-const bodyParser = require("body-parser");
-
-
-
-// Converte objeto JS para JSON
-var novoJson = JSON.stringify(words);
-// Converte objeto JSON para JS
-var novoObjeto = JSON.parse(novoJson);
-
 console.log("Server is starting");
 
 const express = require("express");
 const app = express();
-var server = app.listen(3000, listening());
-
-// Verifica se a porta está sendo ouvida
-function listening() {
-    console.log("Listening. . .");
-}
+var server = app.listen(3000, () => console.log("Listening..."));
 
 // Busca a página HTML especificada
-app.use(express.static("website"));
+app.use(express.static("public"));
 
 // Pega a aba de "adicionar" + palavra + pontuação ?(não lança erro ou exige um valor)
 app.get("/add/:word/:score?", addWord);
@@ -101,42 +72,6 @@ function searchWord(request, response) {
     }
     response.send(reply);
 }
-
-
-// app.use(bodyParser.json());
-app.post("/add", (req, res) => {
-    const data = req.body; // Dados enviados pelo cliente
-
-    // Lógica para inserir os dados no banco de dados
-    // Aqui você pode usar uma biblioteca de banco de dados como o Mongoose (para MongoDB) ou o Sequelize (para bancos de dados SQL) para inserir os dados no banco.
-
-    // Exemplo de como salvar os dados em um arquivo JSON (não recomendado para produção)
-    const words = JSON.parse(fs.readFileSync("words.json"));
-    words[data.word] = data.score;
-    fs.writeFileSync("words.json", JSON.stringify(words, null, 2));
-
-    // Responder ao cliente com uma confirmação
-    res.json({ message: "Dados inseridos com sucesso!" });
-});
-
-// ... (outras rotas do servidor)
-
-// BodyParser Estudar
-app.use(bodyParser.json());
-app.post("/add", (req, res) => {
-    const data = req.body; // Dados enviados pelo cliente
-
-    // Lógica para inserir os dados no banco de dados
-    // Aqui você pode usar uma biblioteca de banco de dados como o Mongoose (para MongoDB) ou o Sequelize (para bancos de dados SQL) para inserir os dados no banco.
-
-    // Exemplo de como salvar os dados em um arquivo JSON (não recomendado para produção)
-    const words = JSON.parse(fs.readFileSync("words.json"));
-    words[data.word] = data.score;
-    fs.writeFileSync("words.json", JSON.stringify(words, null, 2));
-
-    // Responder ao cliente com uma confirmação
-    res.json({ message: "Dados inseridos com sucesso!" });
-});
 
 
 /*
