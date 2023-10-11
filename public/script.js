@@ -5,7 +5,12 @@ if ("geolocation" in navigator) {
         const lon = position.coords.longitude;
         document.getElementById('latitude').textContent = lat;
         document.getElementById('longitude').textContent = lon;
-      });
+        var map = L.map('map').setView([lat, lon], 13);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+    });
 } else {
     console.log("geolocation IS NOT available");
 };
