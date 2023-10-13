@@ -1,6 +1,6 @@
 if ("geolocation" in navigator) {
     console.log("geolocation is available");
-    navigator.geolocation.getCurrentPosition((position) => {
+    navigator.geolocation.getCurrentPosition(async position => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         document.getElementById('latitude').textContent = lat;
@@ -27,9 +27,9 @@ if ("geolocation" in navigator) {
             [-8.277355, -35.969753],
             [-8.276554, -35.967854]
         ]).addTo(map)
-        // .bindPopup("I am a polygon.")
-        .bindPopup("It's where i work")
-        ;
+            // .bindPopup("I am a polygon.")
+            .bindPopup("It's where i work")
+            ;
 
         const popup = L.popup()
             .setLatLng([lat, lon])
@@ -43,8 +43,22 @@ if ("geolocation" in navigator) {
                 .setContent(`You clicked the map at ${e.latlng.toString()}`)
                 .openOn(map);
         }
-
         map.on('click', onMapClick);
+
+        const data = { lat, lon };
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }
+        const response = await fetch('/api', options);
+        console.log("Minha resposta", response);
+        const json = await response.json();
+        console.log("O meu json", json);
+
+
     });
 } else {
     console.log("geolocation IS NOT available");

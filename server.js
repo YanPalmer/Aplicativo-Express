@@ -6,6 +6,17 @@ var server = app.listen(3000, () => console.log("Listening..."));
 
 // Busca a página HTML especificada
 app.use(express.static("public"));
+app.use(express.json({limit: "1mb"}));
+
+app.post('/api', (request, response) => {
+    console.log(request.body);
+    data = request.body;
+    response.json({
+        status: "Success",
+        latitude: data.lat,
+        longitude: request.body.lon
+    })
+})
 
 // Pega a aba de "adicionar" + palavra + pontuação ?(não lança erro ou exige um valor)
 app.get("/add/:word/:score?", addWord);
