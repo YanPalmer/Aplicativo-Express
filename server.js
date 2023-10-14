@@ -4,18 +4,38 @@ const express = require("express");
 const app = express();
 var server = app.listen(3000, () => console.log("Listening..."));
 
+// File System
+const fs = require("fs");
+const geolocationData = fs.readFileSync('geolocation.json');
+
+
 // Busca a página HTML especificada
 app.use(express.static("public"));
-app.use(express.json({limit: "1mb"}));
+app.use(express.json({ limit: "1mb" }));
+
+const database = [];
 
 app.post('/api', (request, response) => {
     console.log(request.body);
     data = request.body;
-    response.json({
-        status: "Success",
-        latitude: data.lat,
-        longitude: request.body.lon
-    })
+    if (data.lat && data.lon) {
+        try {
+            console.log("Before: ", JSON.parse(geolocationData));
+            database.push({data});
+            fs.writeFileSync('geolocation.json', JSON.stringify(database, null, 2))
+            console.log("After: ", dados)
+        } catch (error) {
+
+        }
+
+        response.json({
+            status: "Success",
+            latitude: data.lat,
+            longitude: data.lon
+        })
+    } else {
+        console.log("Erro ao receber Lat e Lon");
+    }
 })
 
 // Pega a aba de "adicionar" + palavra + pontuação ?(não lança erro ou exige um valor)

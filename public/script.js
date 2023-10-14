@@ -1,6 +1,6 @@
 if ("geolocation" in navigator) {
     console.log("geolocation is available");
-    navigator.geolocation.getCurrentPosition(async position => {
+    navigator.geolocation.getCurrentPosition(position => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
         document.getElementById('latitude').textContent = lat;
@@ -45,18 +45,27 @@ if ("geolocation" in navigator) {
         }
         map.on('click', onMapClick);
 
-        const data = { lat, lon };
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+
+        let button = document.getElementById('enviarDados')
+        button.addEventListener('click', enviarDados)
+        console.log(button);
+        async function enviarDados() {
+            const data = { lat, lon };
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }
+            
+            const response = await fetch('/api', options);
+            console.log("Minha resposta", response);
+            // const json = await response.json();
+            // console.log("O meu json", json);
+
         }
-        const response = await fetch('/api', options);
-        console.log("Minha resposta", response);
-        const json = await response.json();
-        console.log("O meu json", json);
+
 
 
     });
