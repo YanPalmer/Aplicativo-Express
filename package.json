@@ -9,7 +9,9 @@
   "author": "Yan Palmer",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.3.17"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
