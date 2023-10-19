@@ -1,3 +1,5 @@
+import { AppDataSource } from "./database.js";
+
 console.log("Server is starting");
 
 const express = require("express");
@@ -7,6 +9,23 @@ var server = app.listen(3000, () => console.log("Listening..."));
 // File System
 const fs = require("fs");
 const geolocationData = fs.readFileSync('geolocation.json');
+
+
+
+export const startDatabase = async () => {
+    try {
+        const teste = await AppDataSource.initialize();
+        console.log("Iniciado com sucesso: ", teste)
+    }
+    catch (err) {
+        console.log(err, "Erro ao conectar ao banco de dados");
+        // Trata o erro
+        console.log("Corrigindo código");
+        // Lança o erro para o próximo catch
+        throw err;
+    }
+}
+startDatabase()
 
 
 // Busca a página HTML especificada

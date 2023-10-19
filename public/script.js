@@ -48,7 +48,7 @@ if ("geolocation" in navigator) {
 
         let button = document.getElementById('enviarDados')
         button.addEventListener('click', enviarDados)
-        console.log(button);
+        // console.log(button);
         async function enviarDados() {
             const data = { lat, lon };
             const options = {
